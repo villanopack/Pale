@@ -1,0 +1,67 @@
+fastlane_version "2.35.0"
+
+default_platform :ios
+
+platform :ios do
+  desc "Install dependencies"
+  lane :pods do
+    cocoapods(podfile: 'Example/Podfile', use_bundle_exec: true)
+  end
+
+  # private_lane :create_simulators do
+  #   UI.message 'Creating dedicated simulators...'
+  #   matrix(name: 'Pale - iPhone 7 Plus', device_type: 'iPhone 7 Plus', platform: 'iOS', version: '10.3', reset: true)
+  #   matrix(name: 'Pale - iPhone 8 Plus', device_type: 'iPhone 8 Plus', platform: 'iOS', version: '11.4', reset: true)
+  #   matrix(name: 'Pale - iPhone Xs', device_type: 'iPhone Xs', platform: 'iOS', version: '12.4', reset: true)
+  # end
+  #
+  # private_lane :remove_simulators do
+  #   kill_matrix(name: 'Pale - iPhone 7 Plus')
+  #   kill_matrix(name: 'Pale - iPhone 8 Plus')
+  #   kill_matrix(name: 'Pale - iPhone Xs')
+  # end
+  #
+  desc "Runs Pale tests and generates coverage report"
+  lane :test do |options|
+    create_simulators
+    scan(clean: true, build_for_testing: true)
+    scan(skip_build: true, test_without_building: true)
+    # Scan doesn't generate test report if run on several simulators
+    scan(skip_build: true, test_without_building: true, devices: ['Pale - iPhone Xs'])
+    slather(cobertura_xml: is_ci?, simple_output: !is_ci? && options[:show_coverage] != true,
+      html: !is_ci? && options[:show_coverage] == true, show: !is_ci? && options[:show_coverage] == true,
+      use_bundle_exec: true)
+    remove_simulators
+  end
+
+  desc 'Lints pod'
+  lane :lint do
+    pod_lib_lint(allow_warnings: true, private: true, use_bundle_exec: true)
+  end
+
+  desc "Generates Pale documentation and pushes it to the remote repository"
+  lane :documentation do
+    ensure_git_status_clean
+    jazzy
+    Dir.chdir('..') do sh('rm', '-rf', 'docs/docsets') end # Remove Dash docsets
+    repo_clean = `git status --porcelain`.empty?
+    if !repo_clean
+      git_add(path: 'docs')
+      git_commit(path: 'docs', message: 'Documentation updated')
+      push_to_git_remote
+    end
+  end
+
+  desc 'Publish new version of Pale to spec repository'
+  lane :publish do
+    pod_push(path: 'Pale.podspec', repo: 'wuakitv', allow_warnings: true)
+  end
+
+  after_all do |lane|
+    # nothing right now
+  end
+
+  error do |lane, exception|
+    # hipchat(channel: "Discovery", from: "iOS builds", message: exception.message, api_token: "IBImm0vQXINpndI4gFu28WbX7fZxrLwJxIAqHsWg", version: 2)
+  end
+end

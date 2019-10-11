@@ -1,0 +1,7 @@
+workspace('Example/Pale.xcworkspace')
+scheme('Pale_Example')
+max_concurrent_simulators(2)
+derived_data_path('build/derived')
+output_directory('build/reports/tests')
+code_coverage(true)
+device('Pale - iPhone 7 Plus', 'Pale - iPhone 8 Plus')

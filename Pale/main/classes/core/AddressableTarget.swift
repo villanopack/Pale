@@ -10,17 +10,18 @@ import Foundation
 import Moya
 
 
+/// Internal struct used to bridge between `RelativeTarget`s and `Target`s.
 public struct AddressableTarget<RelativeTarget: RelativeTargetType>: TargetType {
     public let baseURL: URL
     let relativeTarget: RelativeTarget
 
-    public var path: String { return relativeTarget.path }
-    public var method: Moya.Method { return relativeTarget.method }
-    public var sampleData: Data { return relativeTarget.sampleData }
-    public var task: Task { return relativeTarget.task }
-    public var headers: [String: String]? { return relativeTarget.headers }
+    public var path: String { relativeTarget.path }
+    public var method: Moya.Method { relativeTarget.method }
+    public var sampleData: Data { relativeTarget.sampleData }
+    public var task: Task { relativeTarget.task }
+    public var headers: [String: String]? { relativeTarget.headers }
 
-    public init(baseURL: URL, relativeTarget: RelativeTarget) {
+    init(baseURL: URL, relativeTarget: RelativeTarget) {
         self.baseURL = baseURL
         self.relativeTarget = relativeTarget
     }

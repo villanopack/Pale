@@ -13,11 +13,11 @@ import RxSwift
 
 public extension Reactive where Base: AddressableMoyaProviderType {
     func request(_ token: Base.RelativeTarget, callbackQueue: DispatchQueue? = nil) -> Single<Response> {
-        return self.request(AddressableTarget(baseURL: base.baseURL, relativeTarget: token), callbackQueue: callbackQueue)
+        self.request(AddressableTarget(baseURL: base.baseURL, relativeTarget: token), callbackQueue: callbackQueue)
     }
 
     /// Designated request-making method with progress.
     func requestWithProgress(_ token: Base.RelativeTarget, callbackQueue: DispatchQueue? = nil) -> Observable<ProgressResponse> {
-        return self.requestWithProgress(AddressableTarget(baseURL: base.baseURL, relativeTarget: token), callbackQueue: callbackQueue)
+        self.requestWithProgress(AddressableTarget(baseURL: base.baseURL, relativeTarget: token), callbackQueue: callbackQueue)
     }
 }

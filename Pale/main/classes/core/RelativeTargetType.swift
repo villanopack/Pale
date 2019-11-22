@@ -34,8 +34,8 @@ public protocol RelativeTargetType {
 
 /// Default values
 public extension RelativeTargetType {
-    var method: Moya.Method { return .get }
-    var sampleData: Data { return Data() }
-    var validate: Bool { return false }
-    var headers: [String: String]? { return nil }
+    var method: Moya.Method { .get }
+    var sampleData: Data { Data() }
+    var validate: Bool { false }
+    var headers: [String: String]? { nil }
 }

@@ -10,22 +10,26 @@ import Foundation
 import Moya
 
 
+/// A protocol representing an addressable resource, useful when working with a set of providers.
 public protocol Addressable {
     var baseURL: URL { get set }
 }
 
 
+/// A protocol representing a minimal interface for an AddressableMoyaProvider.
 public protocol AddressableMoyaProviderType: Addressable, MoyaProviderType where Target == AddressableTarget<RelativeTarget> {
     associatedtype RelativeTarget: RelativeTargetType
 
+    /// Designated request-making method. Returns a `Cancellable` token to cancel the request later.
     func request(_ target: RelativeTarget, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> Cancellable
 }
 
 
 /// Addressable request provider class. Provides support for dynamic base URLs + relative targets.
-public class AddressableMoyaProvider<RelativeTarget: RelativeTargetType>: MoyaProvider<AddressableTarget<RelativeTarget>>, AddressableMoyaProviderType {
+open class AddressableMoyaProvider<RelativeTarget: RelativeTargetType>: MoyaProvider<AddressableTarget<RelativeTarget>>, AddressableMoyaProviderType {
     public var baseURL: URL
 
+    /// Initializes a provider.
     public init(baseURL: URL,
          endpointClosure: @escaping EndpointClosure = AddressableMoyaProvider.defaultEndpointMapping,
          requestClosure: @escaping RequestClosure = AddressableMoyaProvider.defaultRequestMapping,
@@ -39,7 +43,9 @@ public class AddressableMoyaProvider<RelativeTarget: RelativeTargetType>: MoyaPr
         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, callbackQueue: callbackQueue, session: session, plugins: plugins, trackInflights: trackInflights)
     }
 
-    public func request(_ target: RelativeTarget, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping Completion) -> Cancellable {
-        return self.request(AddressableTarget(baseURL: baseURL, relativeTarget: target), callbackQueue: callbackQueue, progress: progress, completion: completion)
+    /// Designated request-making method. Returns a `Cancellable` token to cancel the request later.
+    @discardableResult
+    open func request(_ target: RelativeTarget, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping Completion) -> Cancellable {
+        self.request(AddressableTarget(baseURL: baseURL, relativeTarget: target), callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
 }

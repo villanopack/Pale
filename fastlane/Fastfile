@@ -10,7 +10,7 @@ platform :ios do
 
   desc 'Lints pod'
   lane :lint do
-    pod_lib_lint(allow_warnings: true, private: true, use_bundle_exec: true)
+    pod_lib_lint(use_bundle_exec: true)
   end
 
   desc "Generates Pale documentation and pushes it to the remote repository"

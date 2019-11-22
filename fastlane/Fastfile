@@ -28,7 +28,7 @@ platform :ios do
 
   desc 'Publish new version of Pale to spec repository'
   lane :publish do
-    pod_push(path: 'Pale.podspec', repo: 'wuakitv', allow_warnings: true)
+    pod_push(path: 'Pale.podspec', use_bundle_exec: true)
   end
 
   after_all do |lane|

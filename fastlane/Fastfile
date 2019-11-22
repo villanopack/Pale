@@ -8,32 +8,6 @@ platform :ios do
     cocoapods(podfile: 'Example/Podfile', use_bundle_exec: true)
   end
 
-  # private_lane :create_simulators do
-  #   UI.message 'Creating dedicated simulators...'
-  #   matrix(name: 'Pale - iPhone 7 Plus', device_type: 'iPhone 7 Plus', platform: 'iOS', version: '10.3', reset: true)
-  #   matrix(name: 'Pale - iPhone 8 Plus', device_type: 'iPhone 8 Plus', platform: 'iOS', version: '11.4', reset: true)
-  #   matrix(name: 'Pale - iPhone Xs', device_type: 'iPhone Xs', platform: 'iOS', version: '12.4', reset: true)
-  # end
-  #
-  # private_lane :remove_simulators do
-  #   kill_matrix(name: 'Pale - iPhone 7 Plus')
-  #   kill_matrix(name: 'Pale - iPhone 8 Plus')
-  #   kill_matrix(name: 'Pale - iPhone Xs')
-  # end
-  #
-  desc "Runs Pale tests and generates coverage report"
-  lane :test do |options|
-    create_simulators
-    scan(clean: true, build_for_testing: true)
-    scan(skip_build: true, test_without_building: true)
-    # Scan doesn't generate test report if run on several simulators
-    scan(skip_build: true, test_without_building: true, devices: ['Pale - iPhone Xs'])
-    slather(cobertura_xml: is_ci?, simple_output: !is_ci? && options[:show_coverage] != true,
-      html: !is_ci? && options[:show_coverage] == true, show: !is_ci? && options[:show_coverage] == true,
-      use_bundle_exec: true)
-    remove_simulators
-  end
-
   desc 'Lints pod'
   lane :lint do
     pod_lib_lint(allow_warnings: true, private: true, use_bundle_exec: true)

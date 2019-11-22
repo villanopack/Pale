@@ -1,0 +1,47 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/jose.gonzalez/Documents/projects/openinput/pale/Pale/main/classes/core/AddressableMoyaProvider.swift",
+      "line": 15,
+      "symbol": "Addressable.baseURL",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jose.gonzalez/Documents/projects/openinput/pale/Pale/main/classes/core/AddressableMoyaProvider.swift",
+      "line": 21,
+      "symbol": "AddressableMoyaProviderType.RelativeTarget",
+      "symbol_kind": "source.lang.swift.decl.associatedtype",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jose.gonzalez/Documents/projects/openinput/pale/Pale/main/classes/core/AddressableMoyaProvider.swift",
+      "line": 30,
+      "symbol": "AddressableMoyaProvider.baseURL",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jose.gonzalez/Documents/projects/openinput/pale/Pale/main/classes/core/AddressableTarget.swift",
+      "line": 16,
+      "symbol": "AddressableTarget.relativeTarget",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jose.gonzalez/Documents/projects/openinput/pale/Pale/main/classes/core/AddressableTarget.swift",
+      "line": 24,
+      "symbol": "AddressableTarget.init(baseURL:relativeTarget:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jose.gonzalez/Documents/projects/openinput/pale/Pale/main/classes/rx/AddressableMoyaProvider+RxSwift.swift",
+      "line": 15,
+      "symbol": "Reactive.request(_:callbackQueue:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/jose.gonzalez/Documents/projects/openinput/pale/Pale/main/classes"
+}

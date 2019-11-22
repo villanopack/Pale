@@ -1,0 +1,41 @@
+fastlane_version "2.35.0"
+
+default_platform :ios
+
+platform :ios do
+  desc "Install dependencies"
+  lane :pods do
+    cocoapods(podfile: 'Example/Podfile', use_bundle_exec: true)
+  end
+
+  desc 'Lints pod'
+  lane :lint do
+    pod_lib_lint(use_bundle_exec: true)
+  end
+
+  desc "Generates Pale documentation and pushes it to the remote repository"
+  lane :documentation do
+    ensure_git_status_clean
+    jazzy
+    Dir.chdir('..') do sh('rm', '-rf', 'docs/docsets') end # Remove Dash docsets
+    repo_clean = `git status --porcelain`.empty?
+    if !repo_clean
+      git_add(path: 'docs')
+      git_commit(path: 'docs', message: 'Documentation updated')
+      push_to_git_remote
+    end
+  end
+
+  desc 'Publish new version of Pale to spec repository'
+  lane :publish do
+    pod_push(path: 'Pale.podspec', use_bundle_exec: true)
+  end
+
+  after_all do |lane|
+    # nothing right now
+  end
+
+  error do |lane, exception|
+    # hipchat(channel: "Discovery", from: "iOS builds", message: exception.message, api_token: "IBImm0vQXINpndI4gFu28WbX7fZxrLwJxIAqHsWg", version: 2)
+  end
+end

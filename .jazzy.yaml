@@ -1,0 +1,15 @@
+module: Pale
+source_directory: Pale/main/classes
+xcodebuild_arguments: ["-workspace","../../../Example/Pale.xcworkspace","-scheme","Pale-Example","-sdk","iphonesimulator"]
+sdk: ios
+
+author: OPEN input
+author_url: https://www.openinput.com/
+copyright: Copyright (c) 2019 OPEN input
+
+github_url: https://github.com/OPENinput/Pale
+github_file_prefix: https://github.com/OPENinput/Pale/tree/master/Pale/main/classes
+
+clean: true
+min_acl: fileprivate
+use_safe_filenames: true

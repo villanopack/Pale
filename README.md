@@ -1,6 +1,5 @@
 # Pale
 
-[![CI Status](https://img.shields.io/travis/openinput/pale.svg?style=flat)](https://travis-ci.org/openinput/pale)
 [![Version](https://img.shields.io/cocoapods/v/pale.svg?style=flat)](https://cocoapods.org/pods/pale)
 [![License](https://img.shields.io/cocoapods/l/pale.svg?style=flat)](https://cocoapods.org/pods/pale)
 [![Platform](https://img.shields.io/cocoapods/p/pale.svg?style=flat)](https://cocoapods.org/pods/pale)
@@ -12,13 +11,14 @@ Pale is a small addition to Moya to be able to use addressable providers.
 - [Pale](#pale)
 	- [Why Pale?](#why-pale)
 		- [Ok, but I meant why 'Pale'?](#ok-but-i-meant-why-pale)
-	- [Installation](#installation)
-	- [Example](#example)
+	- [Using Pale](#using-pale)
+		- [Installation](#installation)
+		- [Using addressable providers](#using-addressable-providers)
+		- [Reactive extensions](#reactive-extensions)
 	- [Developing Pale](#developing-pale)
 		- [Bootstraping your environment](#bootstraping-your-environment)
 		- [Updating your environment](#updating-your-environment)
 		- [Installing dependencies](#installing-dependencies)
-		- [Compiling and running tests](#compiling-and-running-tests)
 	- [Author](#author)
 	- [License](#license)
 
@@ -51,18 +51,114 @@ So if you are using `Pale`,
 
 You've been warned. 😜
 
-## Installation
+## Using Pale
+
+### Installation
 
 `Pale` is available through [CocoaPods](https://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+it, simply add the following line to your `Podfile`:
 
 ```ruby
 pod 'Pale'
 ```
 
-## Example
+### Using addressable providers
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+From now on we assume you are familiar with [Moya](https://github.com/Moya/Moya), at least regarding
+its [basic usage](https://github.com/Moya/Moya/blob/master/docs/Examples/Basic.md). Let's implement
+a subset of the service used in the `Moya` example using an addressable provider.
+
+First of all, we create the usual enum with the targets of our API:
+
+```swift
+enum MyService {
+	case zen
+	case showUser(id: Int)
+}
+```
+
+Then, instead of conforming to the `TargetType` protocol, we conform to our newly introduced
+`RelativeTargetType` protocol. This protocol is basically the same as the Moya's `TargetType`
+protocol except for the `baseURL` property:
+
+```swift
+extension MyService: RelativeTargetType {
+    var path: String {
+        switch self {
+        case .zen:
+            return "/zen"
+        case .showUser(let id), .updateUser(let id, _, _):
+            return "/users/\(id)"
+        }
+    }
+    var method: Moya.Method {
+        return .get
+    }
+    var task: Task {
+        return .requestPlain
+    }
+    var sampleData: Data {
+        switch self {
+        case .zen:
+            return "Half measures are as bad as nothing at all.".data(using: .utf8)!
+        case .showUser(let id):
+            return "{\"id\": \(id), \"first_name\": \"Harry\", \"last_name\": \"Potter\"}".data(using: .utf8)!
+        }
+    }
+    var headers: [String: String]? {
+        return ["Content-type": "application/json"]
+    }
+}
+```
+
+Now, instead of creating a `MoyaProvider`, we create an `AddressableMoyaProvider` providing a base `URL`
+which we will use for all the targets requested with this provider:
+
+```swift
+let provider = AddressableMoyaProvider<MyService>(baseURL: URL(string: "http://www.example.org")!)
+provider.request(.zen) { result in
+	// do something with the result
+}
+
+// Request will go to http://www.example.org/zen
+
+provider.request(.showUser(id: 123))  { result in
+	// do something with the result
+}
+
+// Request will go to http://www.example.org/users/123
+```
+
+If you now want to dynamically change the server you are connecting to, you just have to change the
+`AddressableMoyaProvider`'s `baseURL` property:
+
+```swift
+provider.baseURL = URL(string: "http://test-server.example.org")!
+provider.request(.zen) { result in
+	// do something with the result
+}
+
+// Request will go to http://test-server.example.org/zen
+```
+
+### Reactive extensions
+
+`Pale` also provides reactive extensions if you prefer to use [RxSwift](https://github.com/ReactiveX/RxSwift)
+`Obseravble`s. In that case, make sure you include the following in your `Podfile`:
+
+```ruby
+pod 'Pale/RxSwift'
+```
+
+And then, you just invoke the reactive methods using `RelativeTarget`s instead of `Target`s:
+
+```swift
+provider.rx.request(.zen).subscribe(onNext: { response in
+	// do something with the result
+}, onError: { error in
+	// do something with the error
+})
+```
 
 ## Developing Pale
 
@@ -142,14 +238,8 @@ the Xcode workspace. Just run the following command:
 
     $ bin/fastlane pods
 
-Make sure you open the generated `Example/pale.xcworkspace`, not the project in
-`Example/pale.xcodeproj`.
-
-### Compiling and running tests
-
-In order to compile the application and run the tests run the following command:
-
-    $ bin/fastlane test
+Make sure you open the generated `Example/Pale.xcworkspace`, not the project in
+`Example/Pale.xcodeproj`.
 
 ## Author
 
@@ -157,4 +247,4 @@ José González, jose.gonzalez@openinput.com
 
 ## License
 
-pale is available under the MIT license. See the LICENSE file for more info.
+`Pale` is available under the MIT license. See the LICENSE file for more info.

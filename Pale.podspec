@@ -25,6 +25,7 @@ Pod::Spec.new do |s|
   s.subspec 'RxSwift' do |rx|
     rx.source_files   = 'Pale/main/classes/rx/**/*'
     rx.dependency 'Pale/Core'
+    rx.dependency 'Moya/RxSwift', '~> 14.0.0-beta.4'
     rx.dependency 'RxSwift', '~> 5.0'
   end
 end

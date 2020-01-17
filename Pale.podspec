@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'Pale'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'Addressable Moya provider.'
 
   s.description      = <<-DESC

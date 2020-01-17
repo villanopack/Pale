@@ -8,9 +8,9 @@ PODS:
   - Moya/RxSwift (14.0.0-alpha.1):
     - Moya/Core
     - RxSwift (~> 5.0)
-  - Pale/Core (0.1.0):
+  - Pale/Core (0.1.1):
     - Moya (= 14.0.0-alpha.1)
-  - Pale/RxSwift (0.1.0):
+  - Pale/RxSwift (0.1.1):
     - Moya/RxSwift (= 14.0.0-alpha.1)
     - Pale/Core
     - RxSwift (~> 5.0)
@@ -34,7 +34,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   Moya: 65485239114b3b327a17dc2e839f6c8b7143aae9
-  Pale: b81f0657aab52efd6364d5b4e474d011a292171d
+  Pale: d88c1717f9e5571c4e78bd51bc2276d78f0fa925
   Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
 

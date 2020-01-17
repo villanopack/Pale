@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'Pale'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'Addressable Moya provider.'
 
   s.description      = <<-DESC
@@ -19,13 +19,13 @@ Pod::Spec.new do |s|
 
   s.subspec 'Core' do |core|
     core.source_files = 'Pale/main/classes/core/**/*'
-    core.dependency 'Moya', '~> 14.0.0-beta.4'
+    core.dependency 'Moya', '14.0.0-alpha.1'
   end
 
   s.subspec 'RxSwift' do |rx|
     rx.source_files   = 'Pale/main/classes/rx/**/*'
     rx.dependency 'Pale/Core'
-    rx.dependency 'Moya/RxSwift', '~> 14.0.0-beta.4'
+    rx.dependency 'Moya/RxSwift', '14.0.0-alpha.1'
     rx.dependency 'RxSwift', '~> 5.0'
   end
 end

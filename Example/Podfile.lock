@@ -1,19 +1,21 @@
 PODS:
-  - Alamofire (5.0.0-rc.2)
-  - Moya (14.0.0-beta.4):
-    - Moya/Core (= 14.0.0-beta.4)
-  - Moya/Core (14.0.0-beta.4):
-    - Alamofire (= 5.0.0-rc.2)
-  - Moya/RxSwift (14.0.0-beta.4):
+  - Alamofire (4.9.1)
+  - Moya (14.0.0-alpha.1):
+    - Moya/Core (= 14.0.0-alpha.1)
+  - Moya/Core (14.0.0-alpha.1):
+    - Alamofire (~> 4.1)
+    - Result (~> 4.1)
+  - Moya/RxSwift (14.0.0-alpha.1):
     - Moya/Core
     - RxSwift (~> 5.0)
   - Pale/Core (0.1.0):
-    - Moya (~> 14.0.0-beta.4)
+    - Moya (= 14.0.0-alpha.1)
   - Pale/RxSwift (0.1.0):
-    - Moya/RxSwift (~> 14.0.0-beta.4)
+    - Moya/RxSwift (= 14.0.0-alpha.1)
     - Pale/Core
     - RxSwift (~> 5.0)
-  - RxSwift (5.0.0)
+  - Result (4.1.0)
+  - RxSwift (5.0.1)
 
 DEPENDENCIES:
   - Pale/RxSwift (from `../`)
@@ -22,6 +24,7 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - Moya
+    - Result
     - RxSwift
 
 EXTERNAL SOURCES:
@@ -29,11 +32,12 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: f9450d3c7f6bea2ad62e7a541c3e9b186c7991d6
-  Moya: 53fa45a72929809e0b8bba44a0a53d8d0827bcfe
-  Pale: fc297fadc13f22a4cbc03f1225277c1d3c14875a
-  RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  Moya: 65485239114b3b327a17dc2e839f6c8b7143aae9
+  Pale: b81f0657aab52efd6364d5b4e474d011a292171d
+  Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
+  RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
 
 PODFILE CHECKSUM: 96160a7a59459edf0ce887c37fc3190d6b74d74d
 
-COCOAPODS: 1.8.3
+COCOAPODS: 1.8.4

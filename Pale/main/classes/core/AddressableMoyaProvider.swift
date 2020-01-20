@@ -35,12 +35,12 @@ open class AddressableMoyaProvider<RelativeTarget: RelativeTargetType>: MoyaProv
          requestClosure: @escaping RequestClosure = AddressableMoyaProvider.defaultRequestMapping,
          stubClosure: @escaping StubClosure = AddressableMoyaProvider.neverStub,
          callbackQueue: DispatchQueue? = nil,
-         session: Session = MoyaProvider<Target>.defaultAlamofireSession(),
+         manager: Manager = MoyaProvider<Target>.defaultAlamofireManager(),
          plugins: [PluginType] = [],
          trackInflights: Bool = false) {
 
         self.baseURL = baseURL
-        super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, callbackQueue: callbackQueue, session: session, plugins: plugins, trackInflights: trackInflights)
+        super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, callbackQueue: callbackQueue, manager: manager, plugins: plugins, trackInflights: trackInflights)
     }
 
     /// Designated request-making method. Returns a `Cancellable` token to cancel the request later.
